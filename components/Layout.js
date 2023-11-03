@@ -1,7 +1,7 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import Nav from "@/components/Nav";
 
-export default function Layout({children}) {
+export default function Layout({ children }) {
   const { data: session } = useSession();
   if (!session) {
     return (
@@ -20,8 +20,11 @@ export default function Layout({children}) {
 
   return (
     <div className="bg-[#11122A] min-h-screen grid grid-cols-6">
-      <Nav className="col-span-1"/>
-      <div className="col-span-5 bg-[#1B1C30] flex-grow text-black mt-2 mr-2 rounded-lg p-4 mb-2">{children}</div>
+      <Nav className="col-span-1" />
+
+      <div className="col-span-5 bg-[#1B1C30] flex-grow text-black mt-2 mr-2 rounded-lg p-4 mb-2">
+        {children}
+      </div>
     </div>
   );
 }

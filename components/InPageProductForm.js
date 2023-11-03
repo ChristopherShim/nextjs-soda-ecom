@@ -1,5 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function InPageProductForm({
   _id,
@@ -10,22 +13,45 @@ export default function InPageProductForm({
   stock: existingStock,
   packageType: existingPackageType,
 }) {
+  const dispatch = useDispatch();
+  const editButtonVis = useSelector((state) => state.visibility);
+
   const [title, setTitle] = useState(existingTitle || "");
   const [description, setDescription] = useState(existingDescription || "");
   const [price, setPrice] = useState(existingPrice || "");
   const [images, setImages] = useState(existingImages || []);
   const [stock, setStock] = useState(existingStock || "");
   const [packageType, setPackageType] = useState(existingPackageType || "");
+  const [refreshProducts, setRefreshProducts] = useState(false);
+  const router = useRouter();
 
-  function disableEditHandler(e) {
+  const discardEditHandler = () => {
+    dispatch({ type: "discardEdit" });
+  };
+
+
+  async function saveProduct(e) {
     e.preventDefault();
-    console.log("hello");
+    const data = { title, description, price, images, stock, packageType };
+
+    if (_id) {
+      //Update Product
+      await axios.put("/api/products", { ...data, _id });
+    } else {
+      //Create Product
+      await axios.post("/api/products", data);
+    }
+    setRefreshProducts(true);
+  }
+
+  if (refreshProducts) {
+    router.reload();
   }
 
   return (
     <div className="col-span-1 border-solid border-[1px] border-white px-4 py-6 rounded-lg">
       <h3 className="mb-2">Edit Product</h3>
-      <form>
+      <form onSubmit={saveProduct}>
         <label className="font-medium">Description</label>
         <div className="border-solid border-[1px] rounded-lg p-2 m-2">
           <label>Product Name</label>
@@ -69,10 +95,13 @@ export default function InPageProductForm({
           onChange={(e) => setStock(e.target.value)}
           className="mt-2"
         ></input>
-        <button className="btn-primary">Save</button>
-        <button onClick={disableEditHandler} className="btn-primary">
-          Discard
-        </button>
+        <div className="flex justify-between gap-2">
+          {" "}
+          <button type="button" className="btn-secondary" onClick={discardEditHandler}>
+            Discard
+          </button>
+          <button className="btn-primary">Update</button>
+        </div>
       </form>
     </div>
   );
