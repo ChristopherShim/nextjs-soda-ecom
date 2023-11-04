@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
+import { editActions } from "@/store/index";
 
 export default function InPageProductForm({
   _id,
@@ -14,7 +15,6 @@ export default function InPageProductForm({
   packageType: existingPackageType,
 }) {
   const dispatch = useDispatch();
-  const editButtonVis = useSelector((state) => state.visibility);
 
   const [title, setTitle] = useState(existingTitle || "");
   const [description, setDescription] = useState(existingDescription || "");
@@ -26,7 +26,7 @@ export default function InPageProductForm({
   const router = useRouter();
 
   const discardEditHandler = () => {
-    dispatch({ type: "discardEdit" });
+    dispatch(editActions.discardEdit());
   };
 
 

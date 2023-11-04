@@ -3,23 +3,21 @@ import Link from "next/link";
 import { useState } from "react";
 import InPageProductForm from "./InPageProductForm";
 import { useSelector, useDispatch } from "react-redux";
+import { editActions } from "@/store/index";
 
 const ProductList = (props) => {
   const dispatch = useDispatch();
   const editButtonVis = useSelector((state) => state.visibility);
 
-  const [editButton, setEditButton] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
 
   const clickEditHandler = (product) => {
-    dispatch({ type: "startEdit" });
+    dispatch(editActions.startEdit());
     // setEditButton(true);
     setEditProduct(product);
   };
 
-  const discardEditHandler = () => {
-    dispatch({ type: "discardEdit" });
-  };
+
 
   return (
     <div className="grid grid-cols-4 gap-4">

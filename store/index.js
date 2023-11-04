@@ -1,23 +1,44 @@
 import { createStore } from "redux";
+import { createSlice, configureStore } from "@reduxjs/toolkit";
 
-const editButtonReducer = (state = false,action) =>{
+const initialState = { visibility: false };
 
-    if(action.type === 'startEdit'){
-        return {
-            visibility: true
-        }
-    }
+const editSlice = createSlice({
+  name: "editState",
+  initialState,
+  reducers: {
+    startEdit(state) {
+      state.visibility = true
+    },
+    discardEdit(state) {
+      state.visibility = false
+    },
+  },
+});
 
-    if(action.type === 'discardEdit'){
-        return{
-            visibility: false
-        }
-    }
+// const editButtonReducer = (state = initialState, action) => {
+//   if (action.type === "startEdit") {
+//     return {
+//       visibility: true,
+//     };
+//   }
 
-    return state
+//   if (action.type === "discardEdit") {
+//     return {
+//       visibility: false,
+//     };
+//   }
 
-}
+//   return state;
+// };
 
-const store = createStore(editButtonReducer);
+// const store = createStore(editButtonReducer);
+
+
+const store = configureStore({
+    reducer: editSlice.reducer
+})
+
+export const editActions = editSlice.actions
 
 export default store;
