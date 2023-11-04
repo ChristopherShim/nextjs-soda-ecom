@@ -12,10 +12,14 @@ const products = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
+   fetchData()
+  }, [fetchData]);
+
+  function fetchData(){
     axios.get("/api/products").then((response) => {
       setProducts(response.data);
     });
-  }, []);
+  }
 
   console.log;
   return (
