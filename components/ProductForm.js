@@ -123,7 +123,7 @@ function updateImagesOrder(images){
         value={stock}
         onChange={(e) => setStock(e.target.value)}
       ></input>
-      <button className="btn-primary">Save</button>
+      <button className="btn-default">Save</button>
     </form>
   );
 }
