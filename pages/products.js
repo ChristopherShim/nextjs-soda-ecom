@@ -3,9 +3,9 @@ import React from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ProductList from "@/components/ProductList";
 import { Provider } from 'react-redux';
-import store from '@/store/index';
+import ProductList from "@/components/ProductList";
+import store from "@/store";
 
 const products = () => {
 
@@ -13,7 +13,7 @@ const products = () => {
 
   useEffect(() => {
    fetchData()
-  }, [fetchData]);
+  }, []);
 
   function fetchData(){
     axios.get("/api/products").then((response) => {

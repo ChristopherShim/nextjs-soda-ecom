@@ -1,17 +1,17 @@
 import { createStore } from "redux";
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 
-const initialState = { visibility: false };
+const initialState = { editVisibility: false };
 
 const editSlice = createSlice({
   name: "editState",
   initialState,
   reducers: {
     startEdit(state) {
-      state.visibility = true
+      state.editVisibility = true
     },
     discardEdit(state) {
-      state.visibility = false
+      state.editVisibility = false
     },
   },
 });
@@ -42,3 +42,14 @@ const store = configureStore({
 export const editActions = editSlice.actions
 
 export default store;
+
+
+// import { configureStore } from "@reduxjs/toolkit";
+// import editSlice from "./form-slice";
+
+// const store = configureStore({
+//   reducer: {edit: editSlice.reducer}
+// })
+
+
+// export default store;

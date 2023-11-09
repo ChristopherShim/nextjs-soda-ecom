@@ -1,23 +1,21 @@
 import React from "react";
 import Link from "next/link";
 import { useState } from "react";
-import InPageProductForm from "./InPageProductForm";
 import { useSelector, useDispatch } from "react-redux";
-import { editActions } from "@/store/index";
+// import { editActions } from "@/store/form-slice";
+import { editActions } from "@/store";
+import InPageProductForm from "./InPageProductForm";
 
 const ProductList = (props) => {
   const dispatch = useDispatch();
-  const editButtonVis = useSelector((state) => state.visibility);
+  const editButtonVis = useSelector((state) => state.editVisibility);
 
   const [editProduct, setEditProduct] = useState(null);
 
   const clickEditHandler = (product) => {
     dispatch(editActions.startEdit());
-    // setEditButton(true);
     setEditProduct(product);
   };
-
-
 
   return (
     <div className="grid grid-cols-4 gap-4">

@@ -28,6 +28,7 @@ export default function InPageProductForm({
     dispatch(editActions.discardEdit());
   };
 
+
   async function uploadImages(e) {
     const files = e.target?.files;
     if (files?.length > 0) {
@@ -40,6 +41,7 @@ export default function InPageProductForm({
         return [...oldImages, ...res.data.links];
       });
     }
+    
   }
 
   async function saveProduct(e) {
@@ -53,6 +55,7 @@ export default function InPageProductForm({
       //Create Product
       await axios.post("/api/products", data);
     }
+    dispatch(editActions.discardEdit());
   }
 
   return (
@@ -67,26 +70,29 @@ export default function InPageProductForm({
                 <img src={link}></img>
               </div>
             ))}
-        
 
-        <label className="w-24 h-24 flex items-center justify-center text-sm gap-1 text-gray-500 rounded-lg bg-gray-200 cursor-pointer">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15"
-            />
-          </svg>
-          <div>Upload</div>
-          <input type="file" className="hidden" onChange={uploadImages}></input>
-        </label>
+          <label className="w-24 h-24 flex items-center justify-center text-sm gap-1 text-gray-500 rounded-lg bg-gray-200 cursor-pointer">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15"
+              />
+            </svg>
+            <div>Upload</div>
+            <input
+              type="file"
+              className="hidden"
+              onChange={uploadImages}
+            ></input>
+          </label>
         </div>
 
         <label className="font-medium">Description</label>
