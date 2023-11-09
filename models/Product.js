@@ -7,6 +7,8 @@ const ProductSchema = new Schema({
   images: [{ type: String }],
   stock: { type: Number, required: true },
   packageType: String
+}, {
+  timestamps:true
 });
 
 export const Product = models.Product || model("Product", ProductSchema);
