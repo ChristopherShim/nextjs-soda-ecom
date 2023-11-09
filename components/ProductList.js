@@ -12,7 +12,7 @@ const ProductList = (props) => {
 
   const [editProduct, setEditProduct] = useState(null);
 
-  const clickEditHandler = (product) => {
+  function clickEditHandler(product) {
     dispatch(editActions.startEdit());
     setEditProduct(product);
   };

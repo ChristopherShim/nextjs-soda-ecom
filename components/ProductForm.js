@@ -60,6 +60,10 @@ function updateImagesOrder(images){
   setImages(images)
 }
 
+function cancelNewProduct(){
+  router.push("/products")
+}
+
   return (
     <form onSubmit={saveProduct}>
       <label>Product Name</label>
@@ -123,7 +127,11 @@ function updateImagesOrder(images){
         value={stock}
         onChange={(e) => setStock(e.target.value)}
       ></input>
+      <div className="flex gap-1">
       <button className="btn-default">Save</button>
+      <button type="button" onClick={cancelNewProduct} className="btn-default">Cancel</button>
+      </div>
+      
     </form>
   );
 }
