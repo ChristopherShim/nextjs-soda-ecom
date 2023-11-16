@@ -1,14 +1,29 @@
 import React from "react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { editActions } from "@/store/form-slice";
 import { editActions } from "@/store";
 import InPageProductForm from "./InPageProductForm";
+import axios from "axios";
 
 const ProductList = (props) => {
   const dispatch = useDispatch();
   const editButtonVis = useSelector((state) => state.editVisibility);
+
+  useEffect(()=>{
+    axios.get('/api/orders').then(response => {
+      const sales = response.data;
+      console.log(sales)
+
+      for (const sale of sales){
+        const lineItems = sale.line_items
+          for(const lineItem of lineItems){
+            console.log(lineItem)
+          }
+      }
+    })
+  },[])
 
   const [editProduct, setEditProduct] = useState(null);
 
@@ -16,6 +31,7 @@ const ProductList = (props) => {
     dispatch(editActions.startEdit());
     setEditProduct(product);
   };
+
 
   return (
     <div className="grid grid-cols-4 gap-4">
@@ -43,7 +59,7 @@ const ProductList = (props) => {
               </div>
               <div className="flex gap-2">
                 <p>Sold</p>
-                <p className="font-bold">??</p>
+                <p className="font-bold">{product.sold}</p>
               </div>
             </div>
 

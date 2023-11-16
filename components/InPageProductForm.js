@@ -13,6 +13,7 @@ export default function InPageProductForm({
   images: existingImages,
   stock: existingStock,
   packageType: existingPackageType,
+  // sold: existingSold,
 }) {
   const dispatch = useDispatch();
 
@@ -22,12 +23,11 @@ export default function InPageProductForm({
   const [images, setImages] = useState(existingImages || []);
   const [stock, setStock] = useState(existingStock || "");
   const [packageType, setPackageType] = useState(existingPackageType || "");
-  const router = useRouter();
+  // const [sold,setSold] = useState(existingSold || "")
 
   const discardEditHandler = () => {
     dispatch(editActions.discardEdit());
   };
-
 
   async function uploadImages(e) {
     const files = e.target?.files;
@@ -46,8 +46,7 @@ export default function InPageProductForm({
 
   async function saveProduct(e) {
     e.preventDefault();
-    const data = { title, description, price, images, stock, packageType };
-
+    const data = { title, description, price, images, stock, sold, packageType };
     if (_id) {
       //Update Product
       await axios.put("/api/products", { ...data, _id });
@@ -138,6 +137,14 @@ export default function InPageProductForm({
           onChange={(e) => setStock(e.target.value)}
           className="mt-2"
         ></input>
+          {/* <label>Sold #</label>
+        <input
+          type="number"
+          placeholder="sold"
+          value={sold}
+          onChange={(e) => setSold(e.target.value)}
+          className="mt-2"
+        ></input> */}
         <div className="flex justify-between gap-2">
           {" "}
           <button
