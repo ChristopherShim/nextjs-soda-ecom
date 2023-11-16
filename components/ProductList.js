@@ -10,31 +10,42 @@ import axios from "axios";
 const ProductList = (props) => {
   const dispatch = useDispatch();
   const editButtonVis = useSelector((state) => state.editVisibility);
+  const [editProduct, setEditProduct] = useState(null);
+  const [totalArray, setTotalArray] = useState([]);
 
   useEffect(() => {
     axios.get("/api/orders").then((response) => {
       const sales = response.data;
-
-      let totalArray = [];
-
-      let occurences = [];
-
+      const allItems = [];
       for (const sale of sales) {
         const lineItems = sale.line_items;
         for (const lineItem of lineItems) {
-          totalArray.push(lineItem);
+          allItems.push(lineItem);
         }
       }
-
-      occurences = totalArray.reduce(function (acc, curr) {
-        return acc[curr] ? ++acc[curr] : (acc[curr] = 1), acc;
-      }, {});
-
-      console.log(totalArray);
+      setTotalArray(allItems);
     });
   }, []);
 
-  const [editProduct, setEditProduct] = useState(null);
+  function findSoldNumber(product) {
+    let count = 0;
+// console.log(totalArray) 
+    // for (let i = 0; i <totalArray.length; i++) {
+    //   if (product._id ==totalArray[i].itemId) {
+    //     count +=totalArray[i].quantity;
+    //   }
+    //   console.log(totalArray[i].itemId);
+    // }
+
+    // MIGHT NEED TO USE FOR OF LOOP
+
+    for (const array of totalArray){
+      if (product._id == array.itemId){
+        count += array.quantity
+      }
+    }
+    return count;
+  }
 
   function clickEditHandler(product) {
     dispatch(editActions.startEdit());
@@ -67,7 +78,7 @@ const ProductList = (props) => {
               </div>
               <div className="flex gap-2">
                 <p>Sold</p>
-                <p className="font-bold">{product.sold}</p>
+                <p className="font-bold">{findSoldNumber(product)}</p>
               </div>
             </div>
 
