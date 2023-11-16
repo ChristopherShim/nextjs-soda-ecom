@@ -11,27 +11,35 @@ const ProductList = (props) => {
   const dispatch = useDispatch();
   const editButtonVis = useSelector((state) => state.editVisibility);
 
-  useEffect(()=>{
-    axios.get('/api/orders').then(response => {
+  useEffect(() => {
+    axios.get("/api/orders").then((response) => {
       const sales = response.data;
-      console.log(sales)
 
-      for (const sale of sales){
-        const lineItems = sale.line_items
-          for(const lineItem of lineItems){
-            console.log(lineItem)
-          }
+      let totalArray = [];
+
+      let occurences = [];
+
+      for (const sale of sales) {
+        const lineItems = sale.line_items;
+        for (const lineItem of lineItems) {
+          totalArray.push(lineItem);
+        }
       }
-    })
-  },[])
+
+      occurences = totalArray.reduce(function (acc, curr) {
+        return acc[curr] ? ++acc[curr] : (acc[curr] = 1), acc;
+      }, {});
+
+      console.log(totalArray);
+    });
+  }, []);
 
   const [editProduct, setEditProduct] = useState(null);
 
   function clickEditHandler(product) {
     dispatch(editActions.startEdit());
     setEditProduct(product);
-  };
-
+  }
 
   return (
     <div className="grid grid-cols-4 gap-4">
