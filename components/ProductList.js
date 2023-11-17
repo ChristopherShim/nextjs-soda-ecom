@@ -29,15 +29,6 @@ const ProductList = (props) => {
 
   function findSoldNumber(product) {
     let count = 0;
-// console.log(totalArray) 
-    // for (let i = 0; i <totalArray.length; i++) {
-    //   if (product._id ==totalArray[i].itemId) {
-    //     count +=totalArray[i].quantity;
-    //   }
-    //   console.log(totalArray[i].itemId);
-    // }
-
-    // MIGHT NEED TO USE FOR OF LOOP
 
     for (const array of totalArray){
       if (product._id == array.itemId){
@@ -45,6 +36,19 @@ const ProductList = (props) => {
       }
     }
     return count;
+  }
+
+  function findStockNumber(product){
+    let count = product.stock;
+    let quantityAmount = 0;
+
+    for (const array of totalArray){
+      if (product._id == array.itemId){
+        quantityAmount += array.quantity
+      }
+    }
+
+    return count - quantityAmount;
   }
 
   function clickEditHandler(product) {
@@ -74,7 +78,7 @@ const ProductList = (props) => {
             <div className="flex gap-10">
               <div className="flex gap-2">
                 <p>Stock</p>
-                <p className="font-bold">{product.stock}</p>
+                <p className="font-bold">{findStockNumber(product)}</p>
               </div>
               <div className="flex gap-2">
                 <p>Sold</p>
