@@ -1,15 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useSession ,signOut } from "next-auth/react";
-import Image from "next/image";
-import sopopLogo from "@/assets/Sopop-logo.png";
+import { useSession, signOut } from "next-auth/react";
+import Logo from "./Logo";
 
-const Nav = () => {
+const Nav = ({ show }) => {
   const { data: session } = useSession();
 
   const inactiveLink = "flex gap-1 p-4";
-  const activeLink = inactiveLink + " bg-white text-blue-900 rounded-lg font-bold";
+  const activeLink =
+    inactiveLink + " bg-white text-blue-900 rounded-lg font-bold";
   const route = useRouter();
   const { pathname } = route;
 
@@ -19,8 +19,16 @@ const Nav = () => {
   }
 
   return (
-    <aside className="text-white p-4 pr-0 mr-5">
-      <Image src={sopopLogo} className="h-8 w-full object-contain mb-16"></Image>
+    <aside
+      className={
+        (show ? "left-0" : "-left-full") +
+        " top-0 text-white p-4 pr-0 mr-5 fixed w-full bg-[#11122A] h-full -left-full md:static md:w-auto transition-all"
+      }
+    >
+      <div className="mb-12 mr-4">
+      <Logo/>
+      </div>
+      
 
       <div className="flex gap-4 mb-16 items-center">
         <img

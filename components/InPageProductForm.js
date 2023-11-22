@@ -46,7 +46,7 @@ export default function InPageProductForm({
 
   async function saveProduct(e) {
     e.preventDefault();
-    const data = { title, description, price, images, stock, sold, packageType };
+    const data = { title, description, price, images, stock, packageType };
     if (_id) {
       //Update Product
       await axios.put("/api/products", { ...data, _id });
@@ -137,14 +137,6 @@ export default function InPageProductForm({
           onChange={(e) => setStock(e.target.value)}
           className="mt-2"
         ></input>
-          {/* <label>Sold #</label>
-        <input
-          type="number"
-          placeholder="sold"
-          value={sold}
-          onChange={(e) => setSold(e.target.value)}
-          className="mt-2"
-        ></input> */}
         <div className="flex justify-between gap-2">
           {" "}
           <button
